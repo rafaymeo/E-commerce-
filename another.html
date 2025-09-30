@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Another Profile</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fafafa;
+      color: #262626;
+    }
+
+    .navbar {
+      background: #fff;
+      padding: 10px 20px;
+      border-bottom: 1px solid #dbdbdb;
+      display: flex;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #3897f0;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #3183d6;
+    }
+
+    .profile-container {
+      max-width: 935px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    /* Profile Header */
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .profile-pic img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 2px solid #dbdbdb;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      margin-left: 40px;
+      flex: 1;
+    }
+
+    .profile-username {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .profile-username h2 {
+      font-size: 28px;
+      margin: 0;
+    }
+
+    .follow-btn {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 5px;
+      background: #3897f0;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .follow-btn.unfollow {
+      background: #dbdbdb;
+      color: #262626;
+    }
+
+    .follow-btn:hover {
+      opacity: 0.9;
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: 30px;
+      margin: 20px 0;
+      padding: 0;
+      list-style: none;
+      font-size: 16px;
+    }
+
+    .profile-stats span {
+      font-weight: bold;
+    }
+
+    .profile-bio {
+      font-size: 15px;
+    }
+
+    .profile-bio strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    /* Posts Section */
+    .posts-section {
+      margin-top: 40px;
+    }
+
+    .posts-section h3 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      border-top: 1px solid #dbdbdb;
+      padding-top: 20px;
+    }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .post-card {
+      background: #fff;
+      border: 1px solid #dbdbdb;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .post-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-actions {
+      padding: 10px;
+    }
+
+    .post-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-right: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #262626;
+    }
+
+    .post-actions button:hover {
+      color: #3897f0;
+    }
+
+    .like-count {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .comment-box {
+      margin-top: 10px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .comment-box input {
+      flex: 1;
+      padding: 6px;
+      border: 1px solid #dbdbdb;
+      border-radius: 4px;
+    }
+
+    .comment-box button {
+      padding: 6px 10px;
+      background: #3897f0;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .comment-box button:hover {
+      background: #3183d6;
+    }
+
+    .comments {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="{% url 'home' %}" class="button">Back</a>
+  </div>
+
+  <div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+      <div class="profile-pic">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile Picture">
+      </div>
+      <div class="profile-info">
+        <div class="profile-username">
+          <h2 id="username">tomi_12</h2>
+          <button class="follow-btn" id="followBtn" onclick="toggleFollow()">Follow</button>
+        </div>
+        <ul class="profile-stats">
+          <li><span id="post-count">2</span> posts</li>
+          <li><span id="followers">150</span> followers</li>
+          <li><span id="following">180</span> following</li>
+        </ul>
+        <div class="profile-bio" id="bio">
+          <strong>Tom Hardy</strong>
+          <p>Adventurer | Foodie | Music Lover</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="posts-section">
+      <h3>Posts</h3>
+      <div class="posts-grid">
+        <div class="post-card">
+          <img src="https://picsum.photos/400/400?random=11" alt="Post">
+          <div class="post-actions">
+            <button onclick="toggleLike(this)">❤️ Like</button>
+            <button>💬 Comment</button>
+            <div class="like-count">0 likes</div>
+            <div class="comment-box">
+              <input type="text" placeholder="Add a comment...">
+              <button onclick="addComment(this)">Post</button>
+            </div>
+            <div class="comments"></div>
+          </div>
+        </div>
+
+        <div class="post-card">
+          <img src="https://picsum.photos/400/400?random=12" alt="Post">
+          <div class="post-actions">
+            <button onclick="toggleLike(this)">❤️ Like</button>
+            <button>💬 Comment</button>
+            <div class="like-count">0 likes</div>
+            <div class="comment-box">
+              <input type="text" placeholder="Add a comment...">
+              <button onclick="addComment(this)">Post</button>
+            </div>
+            <div class="comments"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let isFollowing = false;
+
+    function toggleFollow() {
+      const followBtn = document.getElementById("followBtn");
+      const followersCount = document.getElementById("followers");
+
+      if (isFollowing) {
+        followBtn.innerText = "Follow";
+        followBtn.classList.remove("unfollow");
+        followersCount.innerText = parseInt(followersCount.innerText) - 1;
+        isFollowing = false;
+      } else {
+        followBtn.innerText = "Unfollow";
+        followBtn.classList.add("unfollow");
+        followersCount.innerText = parseInt(followersCount.innerText) + 1;
+        isFollowing = true;
+      }
+    }
+
+    function toggleLike(btn) {
+      const likeCountEl = btn.parentElement.querySelector(".like-count");
+      let count = parseInt(likeCountEl.innerText);
+
+      if (btn.classList.contains("liked")) {
+        btn.classList.remove("liked");
+        btn.innerText = "❤️ Like";
+        likeCountEl.innerText = (count - 1) + " likes";
+      } else {
+        btn.classList.add("liked");
+        btn.innerText = "💔 Unlike";
+        likeCountEl.innerText = (count + 1) + " likes";
+      }
+    }
+
+    function addComment(btn) {
+      const commentBox = btn.parentElement;
+      const input = commentBox.querySelector("input");
+      const commentsDiv = commentBox.parentElement.querySelector(".comments");
+
+      if (input.value.trim() !== "") {
+        const p = document.createElement("p");
+        p.innerText = input.value;
+        commentsDiv.appendChild(p);
+        input.value = "";
+      }
+    }
+  </script>
+</body>
+</html>

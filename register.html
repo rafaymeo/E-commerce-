@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Register</title>
   <style>
     body { font-family: Arial, sans-serif; background: #1e293b; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
     .container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); width: 350px; }
@@ -17,14 +17,15 @@
 </head>
 <body>
   <div class="container">
-    <h2>Login</h2>
+    <h2>Register</h2>
     <form method="POST">
       {% csrf_token %}
       <input type="text" name="username" placeholder="Username" required>
+      <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password" placeholder="Password" required>
-      <button type="submit">Login</button>
+      <button type="submit">Register</button>
     </form>
-    <p>If you are not registered, <a href="{% url 'register' %}">Register here</a></p>
+    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
   </div>
 </body>
 </html>

@@ -1,134 +1,138 @@
-from datetime import datetime
-from django.shortcuts import render, redirect
-from django.contrib import messages
+# social/views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import User
-from django.shortcuts import redirect
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from .models import Customer
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+import json
 
-def index_view(request):
-    return render(request,'index.html')
+# Import your custom models
+from .models import Post, Follow 
 
-def home_view(request):
-    return render(request, 'index.html')  # your home page
 
+# ----------------------------------------------------------------------
+# Authentication Views
+# ----------------------------------------------------------------------
+
+# Register View
 def register_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        raw_password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already taken")
-            return redirect('register')
+            messages.error(request, "Username already exists")
+        else:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            messages.success(request, "Registration successful! Please login.")
+            return redirect("login")
 
-        user = User.objects.create_user(username=username, email=email)
-        user.set_password(raw_password)
-        user.save()
-
-        # Create related Customer
-        Customer.objects.create(
-            user=user,
-            username=username,
-            email=email,
-            password=user.password  # hashed
-        )
-
-        return redirect('login')
-
-    return render(request, 'registration.html')
+    return render(request, "register.html")
 
 
+# Login View
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('index')
+            return redirect("home")
         else:
-            messages.error(request, "Invalid credentials")
-            return redirect('login')
+            messages.error(request, "Invalid username or password")
 
-    return render(request, 'login.html')
-
+    return render(request, "login.html")
 
 
-from django.contrib.auth import logout
-
+# Logout View
+@login_required
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect("login")
 
 
+# ----------------------------------------------------------------------
+# Core App Views
+# ----------------------------------------------------------------------
 
-from django.shortcuts import render, redirect
+@login_required
+def home_view(request):
+    # 1. Retrieve all posts, ordered by newest first
+    posts = Post.objects.all().order_by("-created_at")
+    
+    # 2. Get usernames of users the current user is following (for UI purposes)
+    following_usernames = Follow.objects.filter(follower=request.user).values_list("followed__username", flat=True)
 
-def product_detail_view(request):
-    # Extract product info from GET parameters (URL query)
-    name = request.GET.get('name')
-    price = request.GET.get('price')
-    image = request.GET.get('image')
-
-    if not all([name, price, image]):
-        return redirect('index')  # fallback if missing data
-
-    context = {
-        'name': name,
-        'price': price,
-        'image': image
-    }
-    return render(request, 'product.html', context)
-
-
-# views.py
-from django.shortcuts import render
-
-def contact_view(request):
-    return render(request, 'contact.html')
-
-
-
-
-from django.shortcuts import render
-from .models import Product
-
-from django.shortcuts import render, get_object_or_404
-from .models import Product
-
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'product.html', {
-        'name': product.name,
-        'price': product.price,
-        'image': product.image.url
+    return render(request, "home.html", {
+        "posts": posts,
+        "following_usernames": list(following_usernames), 
     })
 
-from django.shortcuts import render
-from .models import Order
 
-def contact_view(request):
-    success_message = None
-    if request.method == "POST":
-        Order.objects.create(
-            first_name=request.POST.get('first_name'),
-            last_name=request.POST.get('last_name'),
-            email=request.POST.get('email'),
-            phone=request.POST.get('phone'),
-            street_address=request.POST.get('street_address'),
-            city=request.POST.get('city'),
-            postal_code=request.POST.get('postal_code'),
-            country=request.POST.get('country'),
-            payment_method=request.POST.get('payment_method'),
-            card_number=request.POST.get('card_number'),
-            expiry_date=request.POST.get('expiry_date'),
-            cvv=request.POST.get('cvv'),
-        )
-        success_message = "✅ Order placed successfully!"
-    return render(request, "contact.html", {"success_message": success_message})
+def profile(request):
+    return render(request, 'profile.html')
+
+
+def another(request):
+    return render(request, "another.html")
+
+
+# ----------------------------------------------------------------------
+# API/Action Views (Follow/Unfollow Logic)
+# ----------------------------------------------------------------------
+# social/views.py (or your_app/views.py)
+
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
+# <-- ADD THIS LINE -->
+from django.views.decorators.csrf import csrf_exempt 
+
+import json
+from .models import Follow # Make sure this import is correct
+
+# ... other views ...
+
+@login_required
+@require_POST
+@csrf_exempt # Now defined
+def toggle_follow(request):
+    # ... rest of your toggle_follow logic ...
+    # (The logic for creating/deleting Follow objects is correct)
+    try:
+        data = json.loads(request.body)
+        followed_username = data.get('username')
+    except json.JSONDecodeError:
+        return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
+
+    followed_user = get_object_or_404(User, username=followed_username)
+    follower_user = request.user
+
+    if follower_user == followed_user:
+        return JsonResponse({'status': 'error', 'message': 'Cannot follow yourself'}, status=400)
+
+    try:
+        follow_instance = Follow.objects.get(follower=follower_user, followed=followed_user)
+        follow_instance.delete()
+        is_following = False
+        message = 'Unfollowed successfully'
+    except Follow.DoesNotExist:
+        Follow.objects.create(follower=follower_user, followed=followed_user)
+        is_following = True
+        message = 'Followed successfully'
+
+    return JsonResponse({
+        'status': 'success',
+        'is_following': is_following,
+        'message': message
+    })
