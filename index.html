@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EliteStore - Premium E-Commerce</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+        /* Enhanced CSS custom properties and improved color system */
+        :root {
+          --primary-color: #1e293b;
+          --secondary-color: #475569;
+          --accent-color: #6366f1;
+          --accent-hover: #4f46e5;
+          --success-color: #10b981;
+          --warning-color: #f59e0b;
+          --error-color: #ef4444;
+
+          --text-primary: #0f172a;
+          --text-secondary: #475569;
+          --text-muted: #94a3b8;
+          --text-white: #ffffff;
+
+          --bg-primary: #ffffff;
+          --bg-secondary: #f8fafc;
+          --bg-tertiary: #f1f5f9;
+          --bg-dark: #0f172a;
+
+          --border-color: #e2e8f0;
+          --border-hover: #cbd5e1;
+
+          --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+          --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+          --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+          --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+          --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+
+          --radius-sm: 0.375rem;
+          --radius-md: 0.5rem;
+          --radius-lg: 0.75rem;
+          --radius-xl: 1rem;
+          --radius-2xl: 1.5rem;
+
+          --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          --font-display: 'Playfair Display', Georgia, serif;
+
+          --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+          --gradient-secondary: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+          --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+          --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        /* Improved base styles and typography */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        body {
+          font-family: var(--font-primary);
+          background-color: var(--bg-secondary);
+          color: var(--text-primary);
+          line-height: 1.6;
+          font-weight: 400;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Enhanced navigation with better glassmorphism effect */
+        .navbar {
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(226, 232, 240, 0.3);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .navbar.scrolled {
+          background: rgba(255, 255, 255, 0.98);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .nav-container {
+          max-width: 1400px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem 2rem;
+          gap: 2rem;
+        }
+
+        .logo {
+          font-family: var(--font-display);
+          font-size: 1.875rem;
+          font-weight: 700;
+          background: var(--gradient-primary);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          white-space: nowrap;
+        }
+
+        .logo:hover {
+          transform: scale(1.05);
+        }
+
+        .logo i {
+          color: var(--accent-color);
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+          font-size: 1.5rem;
+        }
+
+        .search-container {
+          flex: 1;
+          max-width: 500px;
+          position: relative;
+        }
+
+        .search-bar {
+          width: 100%;
+          padding: 0.875rem 3rem 0.875rem 1.25rem;
+          border: 2px solid transparent;
+          border-radius: var(--radius-2xl);
+          font-size: 0.95rem;
+          background: var(--bg-secondary);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+          box-shadow: var(--shadow-sm);
+          font-family: var(--font-primary);
+        }
+
+        .search-bar:focus {
+          border-color: var(--accent-color);
+          background: var(--bg-primary);
+          box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1), var(--shadow-lg);
+          transform: translateY(-1px);
+        }
+
+        .search-bar::placeholder {
+          color: var(--text-muted);
+        }
+
+        .search-icon {
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-secondary);
+          cursor: pointer;
+          font-size: 1.1rem;
+          transition: all 0.3s ease;
+          padding: 0.25rem;
+          border-radius: var(--radius-md);
+        }
+
+        .search-icon:hover {
+          color: var(--accent-color);
+          background: var(--bg-tertiary);
+        }
+
+        .nav-actions {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .nav-link {
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          padding: 0.5rem 1rem;
+          border-radius: var(--radius-md);
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          white-space: nowrap;
+        }
+
+        .nav-link:hover {
+          color: var(--accent-color);
+          background: var(--bg-secondary);
+        }
+
+        .cart-container {
+          position: relative;
+        }
+
+        .cart-icon {
+          color: var(--text-primary);
+          font-size: 1.25rem;
+          cursor: pointer;
+          padding: 0.75rem;
+          border-radius: var(--radius-lg);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+        }
+
+        .cart-icon:hover {
+          background: var(--accent-color);
+          color: var(--text-white);
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--accent-color);
+        }
+
+        /* Improved cart badge with better animation */
+        .cart-badge {
+          position: absolute;
+          top: -0.25rem;
+          right: -0.25rem;
+          background: var(--gradient-accent);
+          color: var(--text-white);
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 0.25rem 0.5rem;
+          border-radius: 50px;
+          min-width: 1.25rem;
+          text-align: center;
+          animation: cartPulse 2s infinite;
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+          border: 2px solid var(--bg-primary);
+          line-height: 1;
+        }
+
+        @keyframes cartPulse {
+          0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+          }
+          50% {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
+          }
+        }
+
+        /* Simplified hero section with solid dark background for proper contrast */
+   .hero {
+      background: url('https://images.unsplash.com/photo-1513569771920-c9e1d31714af?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+        center/cover no-repeat;
+      color: #ffffff;
+      height: 80vh;
+      min-height: 550px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem;
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-2xl);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Overlay for better readability */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(2px);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 750px;
+      padding: 2.5rem;
+      animation: heroFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 1.5vw, 1rem);
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      font-weight: 200;
+      max-width: 550px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #f1f5f9;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, #7824ffff, #290da5ff);
+      color: #ffffff;
+      padding: 1.3rem 2.8rem;
+      border-radius: var(--radius-2xl);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      transition: all 0.4s ease;
+      box-shadow: 0 12px 32px rgba(109, 40, 217, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .hero-cta:hover::before {
+      left: 100%;
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 16px 48px rgba(109, 40, 217, 0.6);
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+    }
+
+    .hero-cta i {
+      font-size: 1.25rem;
+    }
+        /* Enhanced products section with better spacing and typography */
+        .products {
+          max-width: 1400px;
+          margin: 0 auto;
+          padding: 5rem 2rem;
+        }
+
+        .section-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .section-title {
+          font-family: var(--font-display);
+          font-size: clamp(2rem, 4vw, 3rem);
+          font-weight: 600;
+          color: var(--text-primary);
+          margin-bottom: 1.5rem;
+          position: relative;
+        }
+
+        .section-title::after {
+          content: '';
+          position: absolute;
+          bottom: -0.5rem;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 80px;
+          height: 4px;
+          background: var(--gradient-primary);
+          border-radius: 2px;
+        }
+
+        .section-subtitle {
+          font-size: 1.125rem;
+          color: var(--text-secondary);
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.7;
+        }
+
+        .category-section {
+          margin-bottom: 5rem;
+        }
+
+        .category-title {
+          font-size: 2rem;
+          font-weight: 600;
+          color: var(--text-primary);
+          margin-bottom: 2.5rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 3px solid var(--accent-color);
+          display: inline-block;
+          position: relative;
+        }
+
+        .category-title::after {
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          width: 50%;
+          height: 3px;
+          background: var(--gradient-accent);
+          border-radius: 2px;
+        }
+
+        .product-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2.5rem;
+          margin-top: 2.5rem;
+        }
+
+        /* Enhanced product cards with better hover effects and animations */
+.product-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s ease;
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15);
+  border-color: #6366f1;
+}
+
+.product-image {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: #f9fafb;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.08);
+}
+
+.product-image::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.product-card:hover .product-image::after {
+  left: 100%;
+}
+
+.product-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+
+.product-info {
+  padding: 1.8rem;
+  position: relative;
+  z-index: 2;
+}
+
+.product-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.6rem;
+}
+
+.product-price {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #6366f1;
+  margin-bottom: 1rem;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.stars {
+  color: #ffcd04ff;
+  display: flex;
+  gap: 0.1rem;
+}
+
+.rating-text {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #7824ffff, #290da5ff);
+  color: #fff;
+  border: none;
+  padding: 1.1rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.add-to-cart-btn .btn-icon {
+  font-size: 1.2rem;
+}
+
+.add-to-cart-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.add-to-cart-btn:hover::before {
+  width: 350px;
+  height: 350px;
+}
+
+.add-to-cart-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.4);
+}
+
+.add-to-cart-btn:active {
+  transform: scale(0.98);
+}
+
+
+        /* Enhanced footer with better styling and layout */
+        .footer {
+          background: var(--gradient-secondary);
+          color: var(--text-white);
+          padding: 5rem 2rem 2rem;
+          margin-top: 5rem;
+          position: relative;
+        }
+
+        .footer::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: var(--gradient-primary);
+        }
+
+        .footer-container {
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 3rem;
+          margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+          font-size: 1.375rem;
+          font-weight: 600;
+          margin-bottom: 2rem;
+          color: var(--text-white);
+          position: relative;
+        }
+
+        .footer-section h4::after {
+          content: '';
+          position: absolute;
+          bottom: -0.5rem;
+          left: 0;
+          width: 40px;
+          height: 2px;
+          background: var(--accent-color);
+          border-radius: 1px;
+        }
+
+        .footer-section p,
+        .footer-section li {
+          color: rgba(255, 255, 255, 0.8);
+          margin-bottom: 0.875rem;
+          line-height: 1.7;
+        }
+
+        .footer-section ul {
+          list-style: none;
+        }
+
+        .footer-section a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+          transition: all 0.3s ease;
+          padding: 0.25rem 0;
+          display: inline-block;
+        }
+
+        .footer-section a:hover {
+          color: var(--accent-color);
+          transform: translateX(4px);
+        }
+
+        .social-icons {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 3rem;
+          height: 3rem;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          border-radius: var(--radius-lg);
+          color: var(--text-white);
+          font-size: 1.25rem;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icons a:hover {
+          background: var(--accent-color);
+          transform: translateY(-4px) rotate(5deg);
+          box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4);
+          border-color: var(--accent-color);
+        }
+
+        .footer-bottom {
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          padding-top: 2rem;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.95rem;
+        }
+
+        /* Enhanced notification system */
+        .notification {
+          position: fixed;
+          top: 2rem;
+          right: 2rem;
+          padding: 1rem 1.5rem;
+          border-radius: var(--radius-lg);
+          box-shadow: var(--shadow-xl);
+          z-index: 10000;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          max-width: 400px;
+        }
+
+        .notification-success {
+          background: rgba(16, 185, 129, 0.95);
+          color: white;
+        }
+
+        .notification-warning {
+          background: rgba(245, 158, 11, 0.95);
+          color: white;
+        }
+
+        .notification-error {
+          background: rgba(239, 68, 68, 0.95);
+          color: white;
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 1024px) {
+          .nav-container {
+            padding: 1rem 1.5rem;
+          }
+
+          .hero {
+            margin: 1.5rem;
+            height: 75vh;
+            min-height: 500px;
+          }
+
+          .products {
+            padding: 4rem 1.5rem;
+          }
+
+          .product-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .nav-container {
+            flex-direction: column;
+            gap: 1.5rem;
+            padding: 1rem;
+          }
+
+          .search-container {
+            order: 3;
+            max-width: 100%;
+          }
+
+          .nav-actions {
+            order: 2;
+          }
+
+          .hero {
+            margin: 1rem;
+            height: 70vh;
+            min-height: 450px;
+          }
+
+          .hero-content {
+            padding: 1.5rem;
+          }
+
+          .products {
+            padding: 3rem 1rem;
+          }
+
+          .product-grid {
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+          }
+
+          .footer-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+
+          .notification {
+            top: 1rem;
+            right: 1rem;
+            left: 1rem;
+            max-width: none;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .nav-container {
+            padding: 0.75rem;
+          }
+
+          .hero {
+            margin: 0.5rem;
+          }
+
+          .product-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .product-info {
+            padding: 1.5rem;
+          }
+        }
+
+        /* Enhanced animations and keyframes */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes slideOutRight {
+          from {
+            transform: translateX(0);
+            opacity: 1;
+          }
+          to {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+        }
+
+        @keyframes bounce {
+          0%, 20%, 53%, 80%, 100% {
+            transform: translate3d(0, 0, 0);
+          }
+          40%, 43% {
+            transform: translate3d(0, -8px, 0);
+          }
+          70% {
+            transform: translate3d(0, -4px, 0);
+          }
+          90% {
+            transform: translate3d(0, -2px, 0);
+          }
+        }
+
+        /* Loading states and micro-interactions */
+        .loading {
+          opacity: 0.7;
+          pointer-events: none;
+        }
+
+        .btn-loading {
+          position: relative;
+        }
+
+        .btn-loading::after {
+          content: '';
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          margin: auto;
+          border: 2px solid transparent;
+          border-top-color: currentColor;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        /* Focus states for accessibility */
+        .search-bar:focus,
+        .add-to-cart-btn:focus,
+        .hero-cta:focus,
+        .nav-link:focus,
+        .cart-icon:focus {
+          outline: 2px solid var(--accent-color);
+          outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+          .navbar,
+          .hero,
+          .footer {
+            display: none;
+          }
+
+          .products {
+            margin: 0;
+            padding: 1rem;
+          }
+
+          .product-card {
+            break-inside: avoid;
+            box-shadow: none;
+            border: 1px solid #ccc;
+          }
+        }
+      .nav-right {
+        float: right;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .nav-user {
+        font-weight: bold;
+      }
+      .nav-link {
+        text-decoration: none;
+        color: #007bff;
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">
+  💎 <span style="color: black; font-weight: 700;">EliteStore</span>
+</a>
+
+
+        <div class="search-container">
+          <input
+            type="text"
+            placeholder="Search premium products..."
+            class="search-bar"
+            id="searchBar"
+          />
+          <i class="fas fa-search search-icon" id="searchIcon"></i>
+        </div>
+
+        <div class="nav-actions">
+          <!-- Inside your nav bar -->
+          {% if user.is_authenticated %}
+          <div class="nav-right">
+            <span class="nav-user"
+              ><i class="fas fa-user"></i> {{ user.username }}</span
+            >
+            <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+          </div>
+          {% else %}
+          <a href="{% url 'login' %}" class="nav-link">
+            <i class="fas fa-user"></i>
+            <span>Login</span>
+          </a>
+          {% endif %}
+
+          <div class="cart-container">
+            <div class="cart-icon" id="cartIcon">
+              <i class="fas fa-shopping-cart"></i>
+              <span class="cart-badge" id="cartBadge">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  <section class="hero">
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Premium Fashion Collection</h1>
+        <p class="hero-subtitle">
+          Discover curated luxury items crafted for the modern lifestyle with uncompromising quality and timeless style.
+        </p>
+      <a href="#products" class="hero-cta">
+        Explore Collection
+      </a>
+    </div>
+  </section>
+</main>
+    <!-- Products Section -->
+    <section class="products" id="products">
+      <div class="section-header">
+        <h2 class="section-title">Featured Collections</h2>
+        <p class="section-subtitle">
+          Handpicked premium items designed to elevate your style and comfort
+          with exceptional craftsmanship and attention to detail
+        </p>
+      </div>
+
+      <!-- Shirts Section -->
+      <div class="category-section" id="shirts-section">
+        <h3 class="category-title">Premium Shirts</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=388&auto=format&fit=crop"
+                alt="Premium Cotton Casual Shirt"
+                loading="lazy"
+              />
+              <div class="product-badge">New</div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Premium Cotton Casual Shirt</h3>
+              <div class="product-price">$89.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-text">(4.5) 127 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=600&auto=format&fit=crop"
+                class="add-to-cart-btn">
+                <i class="fas fa-shopping-bag"></i>
+                Add to Cart
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=464&auto=format&fit=crop"
+                alt="Executive Formal Shirt"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Executive Formal Shirt</h3>
+              <div class="product-price">$129.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="rating-text">(5.0) 89 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=464&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=387&auto=format&fit=crop"
+                alt="Designer Denim Shirt"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Designer Denim Shirt</h3>
+              <div class="product-price">$79.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="far fa-star"></i>
+                </div>
+                <span class="rating-text">(4.2) 156 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=387&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pants Section -->
+      <div class="category-section" id="pants-section">
+        <h3 class="category-title">Luxury Pants</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=387&auto=format&fit=crop"
+                alt="Classic Black Trousers"
+                loading="lazy"
+              />
+              <div class="product-badge">Bestseller</div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Classic Black Trousers</h3>
+              <div class="product-price">$149.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="rating-text">(4.8) 203 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=387&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=387&auto=format&fit=crop"
+                alt="Slim Fit Grey Chinos"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Slim Fit Grey Chinos</h3>
+              <div class="product-price">$119.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-text">(4.6) 174 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=387&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFudHN8ZW58MHx8MHx8fDA%3D"
+                alt="Slim Fit Grey Chinos"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Slim Fit Grey Chinos</h3>
+              <div class="product-price">$119.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-text">(4.6) 174 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFudHN8ZW58MHx8MHx8fDA%3D"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shoes Section -->
+      <div class="category-section" id="shoes-section">
+        <h3 class="category-title">Premium Footwear</h3>
+        <div class="product-grid">
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=870&auto=format&fit=crop"
+                alt="Premium Sport Sneakers"
+                loading="lazy"
+              />
+              <div class="product-badge">Limited</div>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Premium Sport Sneakers</h3>
+              <div class="product-price">$199.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <span class="rating-text">(4.9) 312 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=870&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Luxury Dress Shoes"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Luxury Dress Shoes</h3>
+              <div class="product-price">$299.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-text">(4.7) 98 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1539185441755-769473a23570?q=80&w=871&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="product-image">
+              <img
+                src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=398&auto=format&fit=crop"
+                alt="Luxury Dress Shoes"
+                loading="lazy"
+              />
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Luxury Dress Shoes</h3>
+              <div class="product-price">$299.99</div>
+              <div class="product-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="rating-text">(4.7) 98 reviews</span>
+              </div>
+              <a
+                href="{% url 'product_detail' %}?name=Premium%20Cotton%20Casual%20Shirt&price=89.99&image=https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=398&auto=format&fit=crop"
+                class="add-to-cart-btn"
+              >
+                <i class="fas fa-shopping-bag"></i>
+                View Product
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>About EliteStore</h4>
+            <p>
+              We curate premium fashion and lifestyle products for discerning
+              customers who value quality, style, and exceptional craftsmanship.
+              Every item in our collection is carefully selected to meet the
+              highest standards of excellence.
+            </p>
+            <div class="social-icons">
+              <a href="#" aria-label="Facebook"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" aria-label="Twitter"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" aria-label="Instagram"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4>Customer Service</h4>
+            <ul>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Size Guide</a></li>
+              <li><a href="#">Shipping Info</a></li>
+              <li><a href="#">Returns & Exchanges</a></li>
+              <li><a href="#">FAQ</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Sustainability</a></li>
+              <li><a href="#">Affiliate Program</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Cookie Policy</a></li>
+              <li><a href="#">Accessibility</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 EliteStore. All rights reserved. | Designed with
+            excellence in mind.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      class CartManager {
+        constructor() {
+          this.cart = JSON.parse(localStorage.getItem('elitestore_cart')) || [];
+          this.products = {
+            1: { name: 'Premium Cotton Casual Shirt', price: 89.99, image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=388&auto=format&fit=crop' },
+            2: { name: 'Executive Formal Shirt', price: 129.99, image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=464&auto=format&fit=crop' },
+            3: { name: 'Designer Denim Shirt', price: 79.99, image: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?q=80&w=387&auto=format&fit=crop' },
+            4: { name: 'Classic Black Trousers', price: 149.99, image: 'https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=387&auto=format&fit=crop' },
+            5: { name: 'Slim Fit Grey Chinos', price: 119.99, image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=387&auto=format&fit=crop' },
+            6: { name: 'Premium Sport Sneakers', price: 199.99, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=870&auto=format&fit=crop' },
+            7: { name: 'Luxury Dress Shoes', price: 299.99, image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?q=80&w=398&auto=format&fit=crop' }
+          };
+          this.init();
+        }
+
+        init() {
+          this.updateCartBadge();
+          this.bindEvents();
+        }
+
+        bindEvents() {
+          // Add to cart buttons
+          document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+              e.preventDefault();
+              const productId = parseInt(button.dataset.productId);
+              this.addToCart(productId, button);
+            });
+          });
+
+          // Search functionality
+          const searchBar = document.getElementById('searchBar');
+          const searchIcon = document.getElementById('searchIcon');
+
+          searchIcon.addEventListener('click', () => this.performSearch());
+          searchBar.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.performSearch();
+          });
+
+          // Hero CTA smooth scroll
+          document.querySelector('.hero-cta').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('products').scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          });
+
+          // Navbar scroll effect
+          window.addEventListener('scroll', () => this.handleNavbarScroll());
+        }
+
+        addToCart(productId, buttonElement) {
+          const product = this.products[productId];
+          if (!product) return;
+
+          // Add loading state
+          buttonElement.classList.add('btn-loading');
+          buttonElement.disabled = true;
+
+          setTimeout(() => {
+            const existingItem = this.cart.find(item => item.id === productId);
+
+            if (existingItem) {
+              existingItem.quantity += 1;
+            } else {
+              this.cart.push({
+                id: productId,
+                ...product,
+                quantity: 1,
+                addedAt: new Date().toISOString()
+              });
+            }
+
+            this.saveCart();
+            this.updateCartBadge();
+            this.showNotification(`${product.name} added to cart!`, 'success');
+
+            // Remove loading state
+            buttonElement.classList.remove('btn-loading');
+            buttonElement.disabled = false;
+
+            // Add bounce animation to cart icon
+            document.getElementById('cartIcon').style.animation = 'bounce 0.6s ease';
+            setTimeout(() => {
+              document.getElementById('cartIcon').style.animation = '';
+            }, 600);
+          }, 500);
+        }
+
+        updateCartBadge() {
+          const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+          const badge = document.getElementById('cartBadge');
+          badge.textContent = totalItems;
+
+          if (totalItems > 0) {
+            badge.style.display = 'block';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+
+        saveCart() {
+          localStorage.setItem('elitestore_cart', JSON.stringify(this.cart));
+        }
+
+        performSearch() {
+          const query = document.getElementById('searchBar').value.toLowerCase().trim();
+
+          if (!query) {
+            this.showNotification('Please enter a search term', 'warning');
+            return;
+          }
+
+          const sections = {
+            'shirt': 'shirts-section',
+            'pant': 'pants-section',
+            'trouser': 'pants-section',
+            'chino': 'pants-section',
+            'shoe': 'shoes-section',
+            'sneaker': 'shoes-section',
+            'footwear': 'shoes-section',
+            'dress': 'shoes-section'
+          };
+
+          let found = false;
+          for (const [keyword, sectionId] of Object.entries(sections)) {
+            if (query.includes(keyword)) {
+              const section = document.getElementById(sectionId);
+              if (section) {
+                section.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+
+                // Highlight the section briefly
+                section.style.background = 'rgba(99, 102, 241, 0.05)';
+                setTimeout(() => {
+                  section.style.background = '';
+                }, 2000);
+
+                found = true;
+                this.showNotification(`Found products matching "${query}"`, 'success');
+                break;
+              }
+            }
+          }
+
+          if (!found) {
+            this.showNotification('No matching products found', 'warning');
+          }
+
+          // Clear search bar
+          document.getElementById('searchBar').value = '';
+        }
+
+        showNotification(message, type = 'info') {
+          // Remove existing notifications
+          document.querySelectorAll('.notification').forEach(n => n.remove());
+
+          const notification = document.createElement('div');
+          notification.className = `notification notification-${type}`;
+
+          const icon = type === 'success' ? 'fas fa-check-circle' :
+                      type === 'warning' ? 'fas fa-exclamation-triangle' :
+                      type === 'error' ? 'fas fa-times-circle' : 'fas fa-info-circle';
+
+          notification.innerHTML = `
+            <i class="${icon}"></i>
+            <span>${message}</span>
+          `;
+
+          notification.style.animation = 'slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            setTimeout(() => notification.remove(), 400);
+          }, 4000);
+        }
+
+        handleNavbarScroll() {
+          const navbar = document.getElementById('navbar');
+          if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      }
+
+      class PerformanceOptimizer {
+        constructor() {
+          this.init();
+        }
+
+        init() {
+          this.lazyLoadImages();
+          this.preloadCriticalResources();
+          this.addKeyboardNavigation();
+        }
+
+        lazyLoadImages() {
+          if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const img = entry.target;
+                  img.src = img.dataset.src || img.src;
+                  img.classList.remove('loading');
+                  observer.unobserve(img);
+                }
+              });
+            });
+
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+              img.classList.add('loading');
+              imageObserver.observe(img);
+            });
+          }
+        }
+
+        preloadCriticalResources() {
+          // Preload hero background gradient
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'image';
+          link.href = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="2" height="2" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.3" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>';
+          document.head.appendChild(link);
+        }
+
+        addKeyboardNavigation() {
+          // Add keyboard navigation for cart icon
+          document.getElementById('cartIcon').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              // Future: Open cart modal
+              console.log('Cart opened via keyboard');
+            }
+          });
+
+          // Add keyboard navigation for product cards
+          document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            btn.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                btn.click();
+              }
+            });
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const cartManager = new CartManager();
+        const performanceOptimizer = new PerformanceOptimizer();
+
+        // Add smooth reveal animation for product cards
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const cardObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.animationPlayState = 'running';
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.product-card').forEach(card => {
+          card.style.animationPlayState = 'paused';
+          cardObserver.observe(card);
+        });
+
+        console.log('EliteStore initialized successfully');
+      });
+
+      window.addEventListener('error', (e) => {
+        console.error('EliteStore Error:', e.error);
+        // Could send to analytics service in production
+      });
+
+      // Add service worker registration for future PWA features
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // Future: Register service worker for offline functionality
+          console.log('Service Worker support detected');
+        });
+        });
+      }
+    </script>
+  </body>
+</html>

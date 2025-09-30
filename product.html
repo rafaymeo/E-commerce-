@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>{{ name }} - EliteStore</title>
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+ <style>
+  :root {
+   --primary-color: #1e293b;
+   --secondary-color: #475569;
+   --accent-color: #6366f1;
+   --accent-hover: #4f46e5;
+   --success-color: #10b981;
+   --warning-color: #f59e0b;
+   --error-color: #ef4444;
+   --text-primary: #0f172a;
+   --text-secondary: #475569;
+   --text-muted: #94a3b8;
+   --text-white: #ffffff;
+   --bg-primary: #ffffff;
+   --bg-secondary: #f8fafc;
+   --bg-tertiary: #f1f5f9;
+   --bg-dark: #0f172a;
+   --border-color: #e2e8f0;
+   --border-hover: #cbd5e1;
+   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+   --radius-sm: 0.375rem;
+   --radius-md: 0.5rem;
+   --radius-lg: 0.75rem;
+   --radius-xl: 1rem;
+  }
+
+    /* Reset & Base Styles */
+    * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-secondary, #f9fafb);
+      color: var(--text-primary, #111827);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* Navigation Bar */
+    nav.navbar {
+     background-color: var(--bg-primary, #ffffff);
+     border-bottom: 1px solid var(--border-color, #e5e7eb);
+     padding: 1rem 0;
+     position: sticky;
+     top: 0;
+     z-index: 1000;
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Container inside nav */
+    .nav-container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 0 2rem;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+    }
+
+    /* Logo / Branding */
+    .logo {
+     font-size: 1.75rem;
+     color: var(--accent-color, #2563eb);
+     text-decoration: none;
+     font-weight: 800;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+    }
+
+    /* Navigation Links */
+    .nav-actions {
+     display: flex;
+     align-items: center;
+     gap: 1.5rem;
+    }
+
+    .nav-actions a {
+     color: var(--text-secondary, #6b7280);
+     text-decoration: none;
+     font-weight: 500;
+     font-size: 1rem;
+     transition: color 0.2s ease, transform 0.2s ease;
+     display: flex;
+     align-items: center;
+     gap: 0.4rem;
+    }
+
+    .nav-actions a:hover {
+     color: var(--accent-color, #2563eb);
+     transform: translateY(-2px);
+    }
+
+    /* Optional: Active Link Styling */
+    .nav-actions a.active {
+     color: var(--accent-color, #2563eb);
+     font-weight: 600;
+    }
+
+    .cart-icon {
+     position: relative;
+     cursor: pointer;
+     padding: 0.5rem;
+     border-radius: var(--radius-md);
+     transition: background 0.2s ease;
+    }
+
+    .cart-icon:hover {
+     background: var(--bg-tertiary);
+    }
+
+    .cart-badge {
+     position: absolute;
+     top: -5px;
+     right: -5px;
+     background: var(--accent-color);
+     color: white;
+     border-radius: 50%;
+     width: 20px;
+     height: 20px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     font-size: 0.75rem;
+     font-weight: 600;
+    }
+
+    /* Breadcrumb */
+    nav.breadcrumb {
+     background: var(--bg-primary);
+     border-bottom: 1px solid var(--border-color);
+     padding: 1rem 0;
+    }
+
+    .breadcrumb-container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 0 2rem;
+    }
+
+    .breadcrumb-list {
+     list-style: none;
+     display: flex;
+     gap: 0.5rem;
+     align-items: center;
+     padding: 0;
+     margin: 0;
+    }
+
+    .breadcrumb-list li a {
+     color: var(--text-secondary);
+     text-decoration: none;
+     font-size: 0.875rem;
+     transition: color 0.2s ease;
+    }
+
+    .breadcrumb-list li a:hover {
+     color: var(--accent-color);
+    }
+
+    .breadcrumb-separator {
+     color: var(--text-muted);
+     font-size: 0.75rem;
+    }
+
+    /* Main Container */
+    .container {
+     max-width: 1200px;
+     margin: 2rem auto;
+     background: var(--bg-primary);
+     padding: 3rem;
+     border-radius: var(--radius-xl);
+     box-shadow: var(--shadow-lg);
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 4rem;
+    }
+
+    /* Product Gallery */
+    .product-gallery {
+     position: relative;
+    }
+
+    #main-product-image {
+     width: 100%;
+     height: 500px;
+     border-radius: var(--radius-lg);
+     object-fit: cover;
+     box-shadow: var(--shadow-md);
+     transition: transform 0.3s ease;
+    }
+
+    #main-product-image:hover {
+     transform: scale(1.02);
+    }
+
+    /* Product Info */
+    .product-info {
+     display: flex;
+     flex-direction: column;
+     gap: 1.5rem;
+    }
+
+    .product-title {
+     font-size: 2.5rem;
+     font-weight: 700;
+     color: var(--text-primary);
+     line-height: 1.2;
+    }
+
+    .product-price {
+     font-size: 2rem;
+     font-weight: 700;
+     color: var(--accent-color);
+    }
+
+    .description {
+     font-size: 1.125rem;
+     color: var(--text-secondary);
+     line-height: 1.7;
+     padding: 1.5rem;
+     background: var(--bg-tertiary);
+     border-radius: var(--radius-lg);
+     border-left: 4px solid var(--accent-color);
+    }
+
+    /* Selectors */
+    .selectors {
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     gap: 2rem;
+     padding: 2rem;
+     background: var(--bg-secondary);
+     border-radius: var(--radius-lg);
+     border: 1px solid var(--border-color);
+    }
+
+    .selector-group {
+     display: flex;
+     flex-direction: column;
+     gap: 0.75rem;
+    }
+
+    .selector-group label {
+     font-weight: 600;
+     color: var(--text-primary);
+     font-size: 0.875rem;
+     text-transform: uppercase;
+     letter-spacing: 0.05em;
+    }
+
+    select,
+    input[type=number] {
+     padding: 0.875rem 1rem;
+     border: 2px solid var(--border-color);
+     border-radius: var(--radius-md);
+     font-size: 1rem;
+     font-family: inherit;
+     background: var(--bg-primary);
+     transition: all 0.2s ease;
+     cursor: pointer;
+    }
+
+    select:focus,
+    input[type=number]:focus {
+     outline: none;
+     border-color: var(--accent-color);
+     box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+    }
+
+    select:hover,
+    input[type=number]:hover {
+     border-color: var(--border-hover);
+    }
+
+    /* Total Price */
+    .total-price {
+     font-size: 1.5rem;
+     font-weight: 700;
+     color: var(--success-color);
+     padding: 1.5rem;
+     background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+     border-radius: var(--radius-lg);
+     text-align: center;
+     border: 2px solid var(--success-color);
+    }
+
+    /* Buttons */
+    .place-order-btn {
+     background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+     border: none;
+     padding: 1.25rem 2rem;
+     color: white;
+     font-weight: 600;
+     font-size: 1.125rem;
+     border-radius: var(--radius-lg);
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 0.75rem;
+     transition: all 0.3s ease;
+     position: relative;
+     overflow: hidden;
+    }
+
+    .place-order-btn:hover {
+     transform: translateY(-2px);
+     box-shadow: var(--shadow-xl);
+    }
+
+    .place-order-btn:active {
+     transform: translateY(0);
+    }
+
+    .place-order-btn:disabled {
+     opacity: 0.7;
+     cursor: not-allowed;
+     transform: none;
+    }
+
+    /* Confirmation Message */
+    .confirmation-message {
+     background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+     border: 2px solid var(--success-color);
+     border-radius: var(--radius-lg);
+     padding: 2rem;
+     text-align: center;
+     color: #065f46;
+     font-weight: 600;
+     display: none;
+     animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+     from {
+      opacity: 0;
+      transform: translateY(-20px);
+     }
+     to {
+      opacity: 1;
+      transform: translateY(0);
+     }
+    }
+
+    /* Loading states */
+    .loading {
+     opacity: 0.7;
+     pointer-events: none;
+    }
+
+    .spinner {
+     animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+     from { transform: rotate(0deg); }
+     to { transform: rotate(360deg); }
+    }
+    
+    .product-details {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 2rem;
+    }
+    
+    .tabs {
+        display: flex;
+        border-bottom: 2px solid var(--border-color);
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .tab-btn {
+        background: transparent;
+        border: none;
+        padding: 1rem 1.5rem;
+        font-size: 1.125rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--text-secondary);
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s ease;
+    }
+    
+    .tab-btn.active {
+        color: var(--accent-color);
+        border-color: var(--accent-color);
+    }
+    
+    .tab-content {
+        display: none;
+    }
+    
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .tab-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+    
+    .review {
+        border-bottom: 1px solid var(--border-color);
+        padding: 1.5rem 0;
+    }
+    
+    .review:last-child {
+        border-bottom: none;
+    }
+    
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .reviewer-name {
+        font-weight: 600;
+    }
+    
+    .review-rating {
+        color: var(--warning-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+     .nav-container, .breadcrumb-container {
+      padding: 0 1rem;
+     }
+
+     .container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 1rem;
+      padding: 2rem 1.5rem;
+     }
+
+     .product-title {
+      font-size: 2rem;
+     }
+
+     .selectors {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+     }
+
+     #main-product-image {
+      height: 300px;
+     }
+
+     .nav-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+     }
+
+     .nav-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      width: 100%;
+     }
+
+     nav.navbar {
+      padding: 1rem 0.5rem;
+     }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      .product-title {
+        font-size: 1.75rem;
+      }
+
+      .product-price {
+        font-size: 1.5rem;
+      }
+    }
+ </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="{% url 'index' %}" class="logo">
+        <i class="fas fa-gem"></i> EliteStore
+      </a>
+      <div class="nav-actions">
+        <a href="{% url 'index' %}" class="nav-link">
+          <i class="fas fa-home"></i> Home
+        </a>
+        <a href="{% url 'login' %}" class="nav-link">
+          <i class="fas fa-user"></i> Account
+        </a>
+        <div class="cart-icon">
+          <i class="fas fa-shopping-bag"></i>
+          <span class="cart-badge">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <nav class="breadcrumb" aria-label="breadcrumb">
+    <div class="breadcrumb-container">
+      <ul class="breadcrumb-list">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+        <li class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></li>
+        <li class="breadcrumb-item"><a href="{% url 'index' %}#shirts-section">Shirts</a></li>
+        <li class="breadcrumb-separator"><i class="fas fa-chevron-right"></i></li>
+        <li class="breadcrumb-item" aria-current="page">{{ name }}</li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="product-gallery">
+      <img src="{{ image }}" alt="{{ name }}" id="main-product-image" />
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ name }}</h1>
+      <div class="product-price" id="base-price">${{ price }}</div>
+
+      <p class="description">
+        This is a beautiful {{ name }}. Crafted with attention to detail and
+        quality materials, it's designed to bring you comfort and style in
+        every occasion. Experience premium quality that stands the test of time.
+      </p>
+
+      <div class="selectors">
+        <div class="selector-group">
+          <label for="size-select">Size</label>
+          <select id="size-select" name="size" aria-label="Select size">
+            <option value="small" data-multiplier="1">Small</option>
+            <option value="medium" data-multiplier="1.2">Medium (+20%)</option>
+            <option value="large" data-multiplier="1.5">Large (+50%)</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <label for="quantity-input">Quantity</label>
+          <input type="number" id="quantity-input" name="quantity" min="1" max="100" value="1" aria-label="Select quantity" />
+        </div>
+      </div>
+
+      <div class="total-price" id="total-price">Total: ${{ price }}</div>
+
+      <button class="place-order-btn" id="place-order-btn">
+        <i class="fas fa-check-circle"></i> Place Order
+      </button>
+
+      <div class="confirmation-message" id="confirmation-message">
+        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+        <h3>Thank you! Your order has been placed.</h3>
+        <p>Redirecting to checkout...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="product-details">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="description">Description</button>
+      <button class="tab-btn" data-tab="specs">Specifications</button>
+      <button class="tab-btn" data-tab="reviews">Reviews</button>
+      <button class="tab-btn" data-tab="shipping">Shipping & Returns</button>
+    </div>
+    
+    <div id="description" class="tab-content active">
+      <h3>Product Overview</h3>
+      <p>Our premium shirt is designed for comfort and style. Made from 100% organic cotton, it feels soft against the skin and provides excellent breathability. The reinforced stitching ensures long-lasting wear, while the tailored fit provides a modern silhouette. Ideal for both casual outings and more formal settings.</p>
+    </div>
+    
+    <div id="specs" class="tab-content">
+      <h3>Technical Specifications</h3>
+      <ul>
+        <li><strong>Material:</strong> 100% Organic Cotton</li>
+        <li><strong>Fit:</strong> Tailored Fit</li>
+        <li><strong>Weight:</strong> 180 gsm</li>
+        <li><strong>Care Instructions:</strong> Machine wash cold, tumble dry low</li>
+        <li><strong>Available Colors:</strong> Black, White, Grey, Navy</li>
+      </ul>
+    </div>
+    
+    <div id="reviews" class="tab-content">
+      <h3>Customer Reviews (128)</h3>
+      <div class="review">
+        <div class="review-header">
+          <span class="reviewer-name">Jane Doe</span>
+          <div class="review-rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+        </div>
+        <p>Absolutely love this shirt! It's incredibly comfortable and the fit is perfect. I've already ordered another one in a different color. Highly recommend!</p>
+      </div>
+      <div class="review">
+        <div class="review-header">
+          <span class="reviewer-name">John Smith</span>
+          <div class="review-rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+          </div>
+        </div>
+        <p>A very high-quality product. The material is great. Just wish it was a little less expensive.</p>
+      </div>
+    </div>
+
+    <div id="shipping" class="tab-content">
+      <h3>Shipping & Return Policy</h3>
+      <p><strong>Shipping:</strong> We offer free standard shipping on all orders over $75. Expedited shipping options are available at checkout. Please allow 3-5 business days for processing and an additional 5-7 business days for delivery.</p>
+      <p><strong>Returns:</strong> We accept returns for a full refund or exchange within 30 days of the original purchase date. Items must be in new, unworn condition with all original tags attached. To initiate a return, please contact our customer service team.</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // --- Price Calculation and Update ---
+      const basePrice = parseFloat("{{ price }}");
+      const sizeSelect = document.getElementById('size-select');
+      const quantityInput = document.getElementById('quantity-input');
+      const totalPriceEl = document.getElementById('total-price');
+      const placeOrderBtn = document.getElementById('place-order-btn');
+      const confirmationMessage = document.getElementById('confirmation-message');
+
+      function updateTotalPrice() {
+        const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+        const multiplier = parseFloat(selectedOption.getAttribute('data-multiplier')) || 1;
+        let quantity = parseInt(quantityInput.value) || 1;
+
+        // Validate quantity bounds
+        if (quantity < 1) {
+          quantity = 1;
+          quantityInput.value = 1;
+        }
+        if (quantity > 100) {
+          quantity = 100;
+          quantityInput.value = 100;
+        }
+
+        const total = (basePrice * multiplier * quantity).toFixed(2);
+        totalPriceEl.innerHTML = `<i class="fas fa-calculator"></i> Total: $${total}`;
+        
+        // Add animation effect
+        totalPriceEl.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+          totalPriceEl.style.transform = 'scale(1)';
+        }, 200);
+      }
+
+      // Event listeners for price updates
+      sizeSelect.addEventListener('change', updateTotalPrice);
+      quantityInput.addEventListener('input', updateTotalPrice);
+
+      // Enhanced input interactions
+      quantityInput.addEventListener('focus', function() {
+        this.style.transform = 'scale(1.05)';
+      });
+
+      quantityInput.addEventListener('blur', function() {
+        this.style.transform = 'scale(1)';
+      });
+
+      sizeSelect.addEventListener('focus', function() {
+        this.style.transform = 'scale(1.05)';
+      });
+
+      sizeSelect.addEventListener('blur', function() {
+        this.style.transform = 'scale(1)';
+      });
+
+      // Initialize price calculation on page load
+      updateTotalPrice();
+
+      // --- Tabbed Content Functionality ---
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove 'active' class from all buttons and content
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+
+          // Add 'active' class to the clicked button and its corresponding content
+          button.classList.add('active');
+          const targetTab = document.getElementById(button.dataset.tab);
+          if (targetTab) {
+            targetTab.classList.add('active');
+          }
+        });
+      });
+      
+      // --- Place Order Functionality ---
+      placeOrderBtn.addEventListener('click', function() {
+        // Show loading state
+        this.innerHTML = '<i class="fas fa-spinner spinner"></i> Processing...';
+        this.disabled = true;
+        
+        // Show confirmation message
+        setTimeout(() => {
+          confirmationMessage.style.display = 'block';
+          
+          // Redirect after delay
+          setTimeout(() => {
+            window.location.href = "{% url 'contact' %}";
+          }, 2500);
+        }, 1000);
+      });
+
+      // --- Navbar Shadow on Scroll ---
+      window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 100) {
+          navbar.style.boxShadow = 'var(--shadow-md)';
+        } else {
+          navbar.style.boxShadow = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
